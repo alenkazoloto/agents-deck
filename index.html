@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agents Deck</title>
+<meta name="description" content="Claude Code and Codex control panel for your JetBrains IDE.">
+<style>
+:root { color-scheme: light dark; --fg: #1c1c1e; --dim: #5b6068; --bg: #ffffff;
+        --rule: #e3e6ea; --link: #0b62d0; --code: #f4f5f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --fg: #e6e7ea; --dim: #9aa1ab; --bg: #17181b; --rule: #2c2e33;
+          --link: #79b2ff; --code: #22242a; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.62 -apple-system,
+       BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       -webkit-text-size-adjust: 100%; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+nav { display: flex; gap: 1.25rem; align-items: baseline; flex-wrap: wrap;
+      padding-bottom: .9rem; margin-bottom: 2rem; border-bottom: 1px solid var(--rule);
+      font-size: .95rem; }
+nav .brand { font-weight: 600; }
+nav a { color: var(--link); text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+h1 { font-size: 1.85rem; line-height: 1.25; margin: 0 0 1rem; letter-spacing: -.01em; }
+h2 { font-size: 1.2rem; margin: 2.4rem 0 .7rem; }
+h3 { font-size: 1.02rem; margin: 1.8rem 0 .5rem; }
+h4 { font-size: .98rem; margin: 1.4rem 0 .4rem; }
+p, li { margin: .7rem 0; }
+ul { padding-left: 1.3rem; }
+a { color: var(--link); }
+code { background: var(--code); border-radius: 4px; padding: .1em .35em;
+       font: .875em/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+       overflow-wrap: anywhere; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.2rem 0; }
+footer { margin-top: 3.5rem; padding-top: 1.1rem; border-top: 1px solid var(--rule);
+         color: var(--dim); font-size: .875rem; }
+footer a { color: var(--link); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><span class="brand"><a href="./">Agents Deck</a></span>
+<a href="./privacy/">Privacy</a>
+<a href="./eula/">Terms</a></nav>
+<h1>Agents Deck</h1>
+<p><strong>Claude Code and Codex control panel for your JetBrains IDE.</strong></p>
+<p>Agents Deck is the control panel around a coding agent, not another chat box: browse every session across every project, diff what the agent changed against the pre-session file and revert what you don't want, watch token use and cost per day, model and project, and schedule runs. It works with the <code>claude</code> and <code>codex</code> command-line tools you already have installed.</p>
+<h2 id="what-it-does">What it does</h2>
+<ul>
+<li><strong>Sessions</strong> — work across projects with duration, model and estimated cost; resume in chat or the terminal.</li>
+<li><strong>Review</strong> — compare changed files with their pre-session versions, revert per file.</li>
+<li><strong>Usage</strong> — tokens and estimated cost by day, model or project, with plan limits.</li>
+<li><strong>Chats</strong> — file mentions, pasted images, MCP servers, skills and subagents.</li>
+<li><strong>Scheduled runs</strong> — queue prompts and pick them up after a restart.</li>
+</ul>
+<h2 id="local-session-browsing-and-review">Local session browsing and review</h2>
+<p>Agents Deck reads the files the agent CLIs already write on your computer. Local browsing and diff review do not send your code or prompts to us. Optional IDE diagnostic reports use JetBrains Marketplace Exception Analyzer and can be shared with the plugin developer under the IDE's reporting consent and settings. The <a href="privacy/">Privacy Policy</a> describes these reports and the other features that send data to external services.</p>
+<h2 id="install">Install</h2>
+<p>Agents Deck is not on JetBrains Marketplace yet. Requires a JetBrains IDE on build 253 (2025.3) or newer, and your own installation of Claude Code or Codex.</p>
+<h2 id="extensions">Extensions</h2>
+<p>Optional integrations ship as separate plugins, one repository each, and install from <strong>Settings › Tools › Agents Deck › Connections › Extensions</strong>: <a href="https://github.com/alenkazoloto/agents-deck-linear">Linear</a>, <a href="https://github.com/alenkazoloto/agents-deck-sentry">Sentry</a>, <a href="https://github.com/alenkazoloto/agents-deck-granola">Granola</a> and <a href="https://github.com/alenkazoloto/agents-deck-tessl">Tessl</a>. There is also an <a href="https://github.com/alenkazoloto/agent-deck-android">Android companion app</a> for the optional mobile bridge.</p>
+<h2 id="legal">Legal</h2>
+<ul>
+<li><a href="privacy/">Privacy Policy</a> — what the plugin reads, what it stores, and the data flows that leave your machine.</li>
+<li><a href="eula/">Terms of use</a> — the end-user licence agreement for the plugin.</li>
+</ul>
+<h2 id="contact">Contact</h2>
+<p>Questions, bug reports and licence enquiries: <strong>allenkazoloto@gmail.com</strong></p>
+<p>Not affiliated with, endorsed by, or sponsored by Anthropic or OpenAI. Claude and Codex are trademarks of their respective owners.</p>
+<footer>Agents Deck · <a href="mailto:allenkazoloto@gmail.com">allenkazoloto@gmail.com</a></footer>
+</div>
+</body>
+</html>

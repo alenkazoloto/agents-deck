@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Agents Deck</title>
+<meta name="description" content="Effective 2026-09-08. Applies to the Agents Deck plugin for JetBrains IDEs (dev.agentsdeck.jetbrains), published by Agents Deck.">
+<style>
+:root { color-scheme: light dark; --fg: #1c1c1e; --dim: #5b6068; --bg: #ffffff;
+        --rule: #e3e6ea; --link: #0b62d0; --code: #f4f5f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --fg: #e6e7ea; --dim: #9aa1ab; --bg: #17181b; --rule: #2c2e33;
+          --link: #79b2ff; --code: #22242a; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.62 -apple-system,
+       BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       -webkit-text-size-adjust: 100%; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+nav { display: flex; gap: 1.25rem; align-items: baseline; flex-wrap: wrap;
+      padding-bottom: .9rem; margin-bottom: 2rem; border-bottom: 1px solid var(--rule);
+      font-size: .95rem; }
+nav .brand { font-weight: 600; }
+nav a { color: var(--link); text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+h1 { font-size: 1.85rem; line-height: 1.25; margin: 0 0 1rem; letter-spacing: -.01em; }
+h2 { font-size: 1.2rem; margin: 2.4rem 0 .7rem; }
+h3 { font-size: 1.02rem; margin: 1.8rem 0 .5rem; }
+h4 { font-size: .98rem; margin: 1.4rem 0 .4rem; }
+p, li { margin: .7rem 0; }
+ul { padding-left: 1.3rem; }
+a { color: var(--link); }
+code { background: var(--code); border-radius: 4px; padding: .1em .35em;
+       font: .875em/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+       overflow-wrap: anywhere; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.2rem 0; }
+footer { margin-top: 3.5rem; padding-top: 1.1rem; border-top: 1px solid var(--rule);
+         color: var(--dim); font-size: .875rem; }
+footer a { color: var(--link); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><span class="brand"><a href="../">Agents Deck</a></span>
+<a href="../privacy/">Privacy</a>
+<a href="../eula/">Terms</a></nav>
+<h1>Privacy Policy — Agents Deck</h1>
+<p><strong>Effective 2026-09-08.</strong> Applies to the Agents Deck plugin for JetBrains IDEs (<code>dev.agentsdeck.jetbrains</code>), published by Agents Deck.</p>
+<h2 id="the-short-version">The short version</h2>
+<p><strong>Agents Deck has no analytics service or custom telemetry endpoint.</strong> Local session browsing and diff review do not send your code or prompts to us. Optional diagnostic reports use the IDE's JetBrains reporting service and can be shared with us as the plugin developer (§3.6).</p>
+<p>The data flows that leave your machine are listed in §3, with agent CLI traffic explained in §4.</p>
+<h2 id="1-what-the-plugin-reads-on-your-machine">1. What the plugin reads on your machine</h2>
+<p>Agents Deck is a reader of files the Claude Code and Codex command-line tools already write. It reads, on your computer only:</p>
+<ul>
+<li><strong>Session transcripts</strong> — <code>~/.claude/projects/&lt;encoded-cwd&gt;/&lt;session-uuid&gt;.jsonl</code> and the Codex equivalent. These contain your prompts, the agent's replies, tool calls, and excerpts of files the agent read or wrote.</li>
+<li><strong>Pre-edit backups</strong> — <code>~/.claude/file-history/&lt;session-id&gt;/…</code>, used to diff and revert what an agent changed.</li>
+<li><strong>Prompt history</strong> — <code>~/.claude/history.jsonl</code>.</li>
+<li><strong>Agent configuration</strong> — <code>~/.claude.json</code> and related settings, including the <code>env</code> blocks of configured MCP servers (see §4).</li>
+<li><strong>Your project files</strong>, to show diffs against the agent's changes.</li>
+</ul>
+<p>Reading these files does not transmit them to us. Information you include in feedback or an IDE diagnostic report may be shared as described in §3.5–3.6.</p>
+<h2 id="2-what-the-plugin-stores-on-your-machine">2. What the plugin stores on your machine</h2>
+<ul>
+<li><strong>Preferences</strong> — your settings, in the IDE's own configuration directory (<code>claudeAgents.xml</code> and siblings). Choices and layout, not content.</li>
+<li><strong>Unsent chat drafts</strong>, so typed text survives closing the tool window.</li>
+<li><strong>Plugin action log</strong> — a local record of <em>which controls you used</em>: action names, tab names, counts and durations. It is <strong>off unless you turn it on</strong> in <strong>Settings › Tools › Agents Deck › Preferences</strong>; nothing is recorded before that. It never records prompt text, file contents, paths to your code, or credentials, and every recorded value is truncated as a backstop. It is written to a file under the IDE's system directory, is deleted after 30 days, and is <strong>erased in full</strong> the moment you turn it back off. It is never sent anywhere.</li>
+<li><strong>Paired mobile devices</strong> (§3.4), if you pair one. Access tokens are stored only as a SHA-256 digest — the token itself leaves the IDE once, at pairing, and is never written to disk.</li>
+<li><strong>Scheduled runs</strong> and the plugin's own state file, <code>~/.claude/claude-agents.json</code>.</li>
+</ul>
+<h2 id="3-what-leaves-your-machine">3. What leaves your machine</h2>
+<p>These flows depend on the features you use and, for IDE diagnostics, your reporting consent and settings.</p>
+<h3 id="3-1-your-claude-account-for-usage-and-limits">3.1 Your Claude account, for usage and limits</h3>
+<p>To show token usage, plan limits and the <strong>Data privacy</strong> control in Settings › About, the plugin calls <code>api.anthropic.com</code> using the OAuth token <strong>Claude Code already stored on your machine for your own account</strong>. It sends no prompt text and no code — only the authenticated request itself.</p>
+<p>The Data privacy control writes exactly one field on your account (<code>grove_enabled</code>) when you click it. That is the plugin's only authenticated write to any service.</p>
+<h3 id="3-2-issue-trackers-and-ci-if-you-configured-them">3.2 Issue trackers and CI, if you configured them</h3>
+<p>If you have YouTrack, TeamCity or GitHub credentials exported in your environment or present in an MCP server's <code>env</code> block, the plugin uses them to show issue and build status. Requests go to <strong>the host you configured</strong> — nowhere else. The plugin never stores these tokens; it reads them where your other tooling already keeps them.</p>
+<h3 id="3-3-installing-an-extension-from-github">3.3 Installing an extension from GitHub</h3>
+<p>If you install an Agents Deck extension by naming a GitHub repository, the plugin contacts <code>api.github.com</code> and downloads that release's plugin archive. This happens only when you ask for a specific repository.</p>
+<p>An extension is a JetBrains plugin, and once installed it runs with the same access as the IDE itself — your files, your credentials and your network. Nothing downloaded this way has been reviewed by JetBrains or by us. Before anything is installed, the plugin checks the archive's signature and shows you what it found, together with where the archive came from; an archive whose signature does not match its contents is refused outright. Installing is always your decision, and declining deletes the downloaded copy.</p>
+<h3 id="3-4-the-mobile-bridge-if-you-turn-it-on">3.4 The mobile bridge, if you turn it on</h3>
+<p><strong>Off by default.</strong> No socket is opened until you enable it <em>and</em> pair a device.</p>
+<p>When enabled, your IDE serves your paired phone over HTTPS. The phone pins the server's public key at pairing and refuses any mismatch; every request carries a bearer token whose digest alone is stored; repeated pairing failures lock a peer out. The socket binds to loopback only — it is reachable from your local network solely for interfaces you explicitly tick.</p>
+<p>Optionally, you can make the bridge reachable from outside your network through a public TCP relay (<code>bore</code>, a separate tool you install yourself — the plugin bundles no binaries). The relay forwards <strong>encrypted bytes</strong>: your phone's TLS session runs end to end to your IDE, so the relay operator cannot read what passes through it. Data reaching your phone this way includes session transcripts, which contain your source code — enable this only if that is acceptable to you.</p>
+<h3 id="3-5-feedback-you-compose">3.5 Feedback you compose</h3>
+<p>The About page's feedback and problem-report actions open <strong>your own mail client</strong> with a prepared message. Nothing is sent until you review it and press send in your mail client.</p>
+<h3 id="3-6-ide-error-and-freeze-reports">3.6 IDE error and freeze reports</h3>
+<p>Agents Deck uses <a href="https://plugins.jetbrains.com/docs/marketplace/exception-analyzer.html">JetBrains Marketplace Exception Analyzer</a> for IDE diagnostic reports. JetBrains receives submitted reports and makes them available to us to investigate and fix plugin problems. A report may include an exception message and stack trace, IDE/plugin/OS and Java runtime versions, update settings, recent IDE actions, a pseudonymous installation identifier, your comment, and included attachments. On IDE versions that support plugin freeze reporting, attachments may include thread dumps and freeze diagnostics. Messages and attachments can contain file paths or other sensitive context.</p>
+<p>Reporting follows the IDE's consent flow and reporting settings. Review the report and selected attachments before submitting; newer IDE versions may also offer automatic reporting settings. Agents Deck adds no separate background reporting service. JetBrains' handling is governed by its <a href="https://www.jetbrains.com/legal/docs/privacy/privacy/">Privacy Policy</a>.</p>
+<h2 id="4-what-the-agent-cli-does-is-not-us-but-you-should-know">4. What the agent CLI does is not us — but you should know</h2>
+<p>Agents Deck runs the <code>claude</code> and <code>codex</code> binaries <strong>you</strong> installed, under <strong>your</strong> account. When you send a chat message, that CLI transmits your prompt and whatever project context it decides to include to Anthropic or OpenAI, under <strong>your existing agreement with them</strong> and their privacy policy — exactly as it would if you ran it in a terminal.</p>
+<p>The plugin does not add to, alter, or copy that transmission, and does not send anything to those providers on its own behalf beyond §3.1. If you want to know what your agent sends, that is a question for your agent vendor's policy, not this one.</p>
+<h2 id="5-first-party-extensions">5. First-party extensions</h2>
+<p>Agents Deck extensions (Linear, Sentry, Granola, Tessl) are <strong>separate plugins you install separately</strong>. When installed and configured with your own API key, each one contacts its own vendor's API on your behalf. Keys you type into an extension's setup dialog are stored in the IDE's <strong>password safe</strong> (your OS keychain), never in plain settings files and never in logs. Each extension's data flow is its own; this policy covers the Agents Deck plugin.</p>
+<h2 id="6-children">6. Children</h2>
+<p>The plugin is a developer tool and is not directed at children.</p>
+<h2 id="7-your-rights">7. Your rights</h2>
+<p>The plugin's local data remains under your control. For access, correction, export or deletion requests concerning feedback or diagnostic reports shared with us, contact <strong>allenkazoloto@gmail.com</strong>, including the report reference if available. For data held by JetBrains or another service provider, contact that provider under its privacy policy.</p>
+<p>If a security issue in the plugin ever causes data to be exposed, we will publish it in <code>CHANGELOG.md</code> and notify affected users through the Marketplace listing, and will meet any notification duty applicable law places on us.</p>
+<h2 id="8-changes">8. Changes</h2>
+<p>Material changes are dated here and summarised in <code>CHANGELOG.md</code>. The effective date at the top of this file is the version in force.</p>
+<h2 id="9-contact">9. Contact</h2>
+<p><strong>allenkazoloto@gmail.com</strong> — <a href="https://alenkazoloto.github.io/agents-deck">https://alenkazoloto.github.io/agents-deck</a></p>
+<footer>This page is generated from the file of the same name in the Agents Deck repository, and the plugin bundles that same file: Settings › Tools › Agents Deck › About opens the copy belonging to the build you have installed.</footer>
+</div>
+</body>
+</html>
