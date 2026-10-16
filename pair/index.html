@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pair Agents Deck</title>
+<meta name="description" content="Pair Agents Deck with your computer, or get the app.">
+<style>
+:root { color-scheme: light dark; --fg: #1c1c1e; --dim: #5b6068; --bg: #ffffff;
+        --rule: #e3e6ea; --link: #0b62d0; --code: #f4f5f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --fg: #e6e7ea; --dim: #9aa1ab; --bg: #17181b; --rule: #2c2e33;
+          --link: #79b2ff; --code: #22242a; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.62 -apple-system,
+       BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+       -webkit-text-size-adjust: 100%; }
+.wrap { max-width: 46rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+nav { display: flex; gap: 1.25rem; align-items: baseline; flex-wrap: wrap;
+      padding-bottom: .9rem; margin-bottom: 2rem; border-bottom: 1px solid var(--rule);
+      font-size: .95rem; }
+nav .brand { font-weight: 600; }
+nav a { color: var(--link); text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+h1 { font-size: 1.85rem; line-height: 1.25; margin: 0 0 1rem; letter-spacing: -.01em; }
+h2 { font-size: 1.2rem; margin: 2.4rem 0 .7rem; }
+h3 { font-size: 1.02rem; margin: 1.8rem 0 .5rem; }
+h4 { font-size: .98rem; margin: 1.4rem 0 .4rem; }
+p, li { margin: .7rem 0; }
+ul { padding-left: 1.3rem; }
+a { color: var(--link); }
+code { background: var(--code); border-radius: 4px; padding: .1em .35em;
+       font: .875em/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+       overflow-wrap: anywhere; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2.2rem 0; }
+footer { margin-top: 3.5rem; padding-top: 1.1rem; border-top: 1px solid var(--rule);
+         color: var(--dim); font-size: .875rem; }
+footer a { color: var(--link); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><span class="brand"><a href="../">Agents Deck</a></span>
+<a href="../privacy/">Privacy</a>
+<a href="../eula/">Terms</a></nav>
+<style>
+#actions { display: flex; flex-wrap: wrap; gap: .6rem 1.2rem; align-items: center; }
+#actions[hidden], #actions > [hidden] { display: none; }
+#copy { font: inherit; color: var(--link); background: none; border: 1px solid var(--rule); border-radius: 6px; padding: .2rem .7rem; cursor: pointer; }
+</style>
+<h1 id="title">Get Agents Deck</h1>
+<p id="lead">Agents Deck shows the Claude Code and Codex sessions running on your computer, on your phone or in a browser.</p>
+<div id="pair" hidden>
+<p id="machine"></p>
+<p id="expiry">The pairing code lasts two minutes. If it has run out, show a new one in Settings › Connections › Mobile on your computer.</p>
+<p id="actions">
+<a id="browser" href="#" hidden>Use in this browser</a>
+<a id="open" href="#" hidden>Open in app</a>
+<button id="copy" type="button" hidden>Copy pairing link</button>
+</p>
+<p id="ios" hidden>On iPhone or iPad, add Agents Deck to your Home Screen first: open <a id="appHome" href="../app/">the web app</a> in Safari, tap Share, then Add to Home Screen. Open it from the Home Screen and choose Paste pairing link. The installed app does not share Safari's storage, so the pairing has to happen inside it.</p>
+<p id="stale" hidden>If Open in app does nothing, update the app.</p>
+<p id="hint">The web app works over your Tailscale network only; it needs Browser access turned on in the same settings page.</p>
+</div>
+<p id="get"><a href="https://github.com/alenkazoloto/agent-deck-android/releases/latest/download/agent-deck.apk">Download for Android</a> · <a href="https://github.com/alenkazoloto/agent-deck-android/releases">All releases</a></p>
+<p id="why" hidden>This code does not pair a browser: the computer's Browser access is off or was not offered when the code was made. The Android app pairs with it.</p>
+<script>
+// The pairing code lives only in the URL fragment, which the browser never sends. This page reads it
+// to name the machine and to build two links; it makes no request with it.
+(function () {
+  var doc = document;
+  var $ = function (id) { return doc.getElementById(id); };
+
+  function decode(fragment) {
+    var m = /(?:^|&)p=([A-Za-z0-9_-]+)(?:&|$)/.exec(fragment.replace(/^#/, ''));
+    if (!m) return null;
+    try {
+      var b64 = m[1].replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4) b64 += '=';
+      var bin = atob(b64);
+      var bytes = new Uint8Array(bin.length);
+      for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      var o = JSON.parse(new TextDecoder().decode(bytes));
+      if (!o || o.v !== 1 || typeof o.code !== 'string' || !o.code) return null;
+      return { p: m[1], machine: typeof o.machine === 'string' ? o.machine : '', web: typeof o.web === 'string' && o.web !== '' };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function show(location, userAgent, clipboard) {
+    var pairing = decode(location.hash || '');
+    if (!pairing) return;
+    $('pair').hidden = false;
+    $('title').textContent = pairing.machine ? 'Pair with ' + pairing.machine : 'Pair Agents Deck';
+    $('machine').textContent = pairing.machine ? 'This code pairs with ' + pairing.machine + '.' : '';
+    $('machine').hidden = !pairing.machine;
+    $('open').href = 'agentdeck://pair#p=' + pairing.p;
+    $('open').hidden = false;
+    $('stale').hidden = false;
+    var ios = /iPhone|iPad|iPod/.test(userAgent);
+    if (pairing.web) {
+      var link = new URL('../app/#p=' + pairing.p, location.href).href;
+      $('hint').hidden = false;
+      $('copy').hidden = false;
+      $('copy').onclick = function () {
+        var done = function () { $('copy').textContent = 'Copied'; };
+        var fail = function () { $('copy').textContent = 'Could not copy'; };
+        try { clipboard.writeText(location.href).then(done, fail); } catch (e) { fail(); }
+      };
+      // iOS keeps a Home-Screen app's storage apart from Safari's, so pairing here would be lost.
+      if (ios) $('ios').hidden = false; else { $('browser').href = link; $('browser').hidden = false; }
+    } else {
+      $('hint').hidden = true;
+      $('why').hidden = false;
+    }
+  }
+
+  if (typeof module !== 'undefined') module.exports = { decode: decode, show: show, $: $ };
+  else show(location, navigator.userAgent, navigator.clipboard);
+})();
+</script>
+
+<footer>Agents Deck · <a href="mailto:allenkazoloto@gmail.com">allenkazoloto@gmail.com</a></footer>
+</div>
+</body>
+</html>
